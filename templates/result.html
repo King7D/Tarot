@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Tarot Reading</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Your Tarot Reading</h1>
+        <div class="row mt-4">
+            {% for card in cards %}
+            <div class="col-md-4 text-center mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ card.name }}</h3>
+                        <p><strong>Orientation:</strong> {{ card.orientation.capitalize() }}</p>
+                        <p>
+                            {% if card.orientation == 'upright' %}
+                                {{ card.upright }}
+                            {% else %}
+                                {{ card.reversed }}
+                            {% endif %}
+                        </p>
+                        <p><strong>Keywords:</strong> {{ card.keywords | join(', ') }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4">
+            <h2>Overall Interpretation</h2>
+            <p>{{ overall_interpretation | safe }}</p>
+        </div>
+        <div class="text-center mt-4 mb-16">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Draw Again</a>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
